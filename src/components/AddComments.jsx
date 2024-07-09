@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
-function AddComments({ asin }) {
+function AddComments({ asin,loadComments }) {
     //asin passato come prop
     const [formValue, setFormValue] = useState({
         rate: '',
         comment: '',
         elementId: asin
     })
+    
     const clearForm = ()=>{
         console.log('ciaoooooo')
         setFormValue({
             rate: '',
             comment: '',
-            elementId: asin,
+            
         })
     }
     const handleChange = (event) => {  //funzione per prendere input
@@ -43,7 +44,8 @@ function AddComments({ asin }) {
           }
         ) 
         
-        clearForm()
+        loadComments()
+        
       }
 
     return (
@@ -56,6 +58,7 @@ function AddComments({ asin }) {
                 <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Your Comment</Form.Label>
                     <Form.Control onChange={handleChange} as="textarea" rows={3} name='comment' />
+                    
                 </Form.Group>
                 <Button onClick={handleSaveComment} variant="primary">Send Comment</Button>
                 <Button onClick={clearForm} variant="dark">Reset</Button>
