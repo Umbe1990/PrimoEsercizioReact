@@ -8,7 +8,16 @@ function AddComments({ asin }) {
         comment: '',
         elementId: asin
     })
+    const clearForm = ()=>{
+        console.log('ciaoooooo')
+        setFormValue({
+            rate: '',
+            comment: '',
+            elementId: asin,
+        })
+    }
     const handleChange = (event) => {  //funzione per prendere input
+       
         setFormValue({ ...formValue, [event.target.name]: event.target.value })
         //prende il valore value e aggiorna array
         /* let a= 'ciao'
@@ -20,6 +29,7 @@ function AddComments({ asin }) {
                let b= a
                a={nome:'michele'}
                console.log(b)  = {nome:'michele'} */
+               
 
     }
     const handleSaveComment = async ()=>{
@@ -31,7 +41,9 @@ function AddComments({ asin }) {
           method: "POST",
           body: JSON.stringify(formValue)
           }
-        )
+        ) 
+        
+        clearForm()
       }
 
     return (
@@ -46,6 +58,7 @@ function AddComments({ asin }) {
                     <Form.Control onChange={handleChange} as="textarea" rows={3} name='comment' />
                 </Form.Group>
                 <Button onClick={handleSaveComment} variant="primary">Send Comment</Button>
+                <Button onClick={clearForm} variant="dark">Reset</Button>
             </Form>
         </>
     )

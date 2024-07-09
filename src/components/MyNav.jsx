@@ -1,20 +1,24 @@
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown,InputGroup,Form  } from 'react-bootstrap';
 
-function MyNav() {
+function MyNav({filter}) {
     return (
         <>
 
 
             <Navbar expand="lg" className="bg-primary">
                 <Container>
-                    <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                    <Navbar.Brand href="#home">I-BOOK</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
+                            <InputGroup className="">
+
+                                <Form.Control onChange={filter} aria-label="Text input with checkbox" placeholder="
+        inserisci libro" />
+                            </InputGroup>
 
                             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.1">Home</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.2">
                                     Another action
                                 </NavDropdown.Item>
