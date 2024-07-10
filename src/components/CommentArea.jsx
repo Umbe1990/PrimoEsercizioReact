@@ -3,7 +3,7 @@ import CommentList from "./CommentList"
 import AddComments from "./AddComments"
 
 
-function CommentArea({ asin }) {
+function CommentArea({asin}) {
     //console.log(asin)
     const [comments, setComments] = useState([])
     const loadComments = async () => {
@@ -23,7 +23,7 @@ function CommentArea({ asin }) {
 
     return (
         <>
-        <AddComments asin={asin}loadComments={loadComments}></AddComments>
+        <AddComments asin={asin} loadComments={loadComments}></AddComments>
         <CommentList comments={comments} loadComments={loadComments}/>
         </>
 
