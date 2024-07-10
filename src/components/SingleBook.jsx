@@ -18,7 +18,7 @@ function Cards({ book }) {
   //console.log(book)
   return (
     <Col md={4}>
-      <Card >
+      <Card style={{width: "22rem"}} className="mb-3" >
         <Card.Img src={book.img} onClick={change} className={select ? 'h-100 classColor' : 'h-100'} />
         <Card.Body>
           <Card.Text>{book.price} Euro</Card.Text>

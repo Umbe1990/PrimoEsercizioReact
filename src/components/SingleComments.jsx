@@ -80,7 +80,7 @@ function SingleComments({ comment, loadComments }) {
   //console.log(id)
   return (
     <>
-      {isEdithing  &&<Form>
+      {isEdithing  &&<Form className='border border-dark'>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Rate 1 of 5</Form.Label>
                     <Form.Control onChange={handleChange}  type="number" placeholder="Rate" min='1' max='5' name='rate' value={formValue.rate} />
@@ -124,17 +124,3 @@ export default SingleComments
 
 
 
-/* const handleSaveComment = async ()=>{
-    await  fetch("https://striveschool-api.herokuapp.com/api/comments/",{
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjhhYWJmYmQzOTNmYzAwMTU5NzNmNGMiLCJpYXQiOjE3MjAzNjQwMjgsImV4cCI6MTcyMTU3MzYyOH0.yjiPrGR-5KrfnEent8KV-w_Kx0DC4yliIzkVJsOdx1Y"
-          },
-      method: "POST",
-      body: JSON.stringify(formValue)
-      }
-    ) 
-    
-    loadComments()
-    
- */
