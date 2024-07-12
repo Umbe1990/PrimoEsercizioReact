@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { ListGroup, Button, Form, Col } from 'react-bootstrap';
+import { useEffect, useState } from 'react';
+import { ListGroup, Button, Form, Col,Alert } from 'react-bootstrap';
 
-function SingleComments({ comment, loadComments }) {
+function SingleComments({ comment, loadComments,setAlert }) {
 
   const handleClearComment = async () => {
     try {
@@ -16,11 +16,17 @@ function SingleComments({ comment, loadComments }) {
       )
       if (response.ok) {
         loadComments()
-        alert('commento cancellato')
+       setAlert({
+        success: true,
+        message: 'commento cancellato'
+       })
       }
     }
     catch (error) {
-      alert('errore generico')
+      setAlert({
+        success: false,
+        message: 'errore generico'
+       })
     }
 
 
@@ -30,17 +36,25 @@ function SingleComments({ comment, loadComments }) {
   //creazione stato per far uscire form
 
   const [isEdithing, setisEdithing] = useState(false)
-  const inizialiState = {
-    rate: comment.rate,
-    comment: comment.comment,
-    elementId: comment.commentid
+  const [alertPut, setAlertPut] = useState(null//cambia stato per alert commento inserito della PUTTTTTTTTT
 
-  }
-  const [formValue, setformValue] = useState(inizialiState)
+  )
+  
+  const [formValue, setformValue] = useState([])
   //funzione per cambiare lo stato 
   const editForm = () => {
     setisEdithing(!isEdithing)
   }
+  useEffect (()=>{
+    const inizialiState = {
+      rate: comment.rate,
+      comment: comment.comment,
+      elementId: comment.commentid
+      //usato use effetc per 
+  
+    }
+    setformValue(inizialiState)
+  },[comment])
   //creazione funione per cambiare il valore
   const handleChange = (event) => {  //funzione per prendere input
 
@@ -50,6 +64,10 @@ function SingleComments({ comment, loadComments }) {
 
 
   const handleModificComment = async () => {
+    if(formValue.rate>5 || formValue.rate<1){ ///controllo x rate valore
+      alert('rate errato')
+      return // fare return per non far partite put
+    }
     try {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/comments/` + comment._id, {
         headers: {
@@ -62,24 +80,39 @@ function SingleComments({ comment, loadComments }) {
       )
       if (response.ok) {
         loadComments()
-        setformValue(inizialiState)
+       // setformValue(inizialiState)
         setisEdithing(false)
 
-        alert('commento modificato')
+        setAlertPut({
+          success: true,
+          message: 'commento modificato'
+
+      })
       }
       else {
-        alert('errore nella modifica')
+        //alert('errore nella modifica')
+        setAlertPut({
+          success: false,
+          message: 'errore nella modifica'
+
+      })
 
       }
     }
     catch (error) {
-      alert('errore generico')
+      //alert('errore generico')
+      setAlertPut({
+        success: false,
+        message: 'errore generico'
+
+    })
     }
   }
 
   //console.log(id)
   return (
     <>
+    {alertPut && <Alert key={alertPut.success ? 'success' : 'danger'} variant={alertPut.success ? 'success' : 'danger'} onClose={() => setAlertPut(null)} dismissible>{alertPut.message}</Alert>}
       {isEdithing  &&<Form className='border border-dark'>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Rate 1 of 5</Form.Label>

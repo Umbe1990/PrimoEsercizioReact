@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 
 function AddComments({ asin, loadComments }) {
     const initialFormSate = {
@@ -8,9 +8,13 @@ function AddComments({ asin, loadComments }) {
         elementId: asin
     }
     //asin passato come prop
-    const [formValue, setFormValue] = useState(initialFormSate
+    const [formValue, setFormValue] = useState(initialFormSate)
+    const [alert, setAlert] = useState(null//cambia stato per alert commento inserito
 
     )
+
+
+
 
 
 
@@ -32,7 +36,7 @@ function AddComments({ asin, loadComments }) {
     }
     const handleSaveComment = async () => {
         try {
-            const response=await fetch("https://striveschool-api.herokuapp.com/api/comments/", {
+            const response = await fetch("https://striveschool-api.herokuapp.com/api/comments/", {
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjhhYWJmYmQzOTNmYzAwMTU5NzNmNGMiLCJpYXQiOjE3MjAzNjQwMjgsImV4cCI6MTcyMTU3MzYyOH0.yjiPrGR-5KrfnEent8KV-w_Kx0DC4yliIzkVJsOdx1Y"
@@ -44,17 +48,39 @@ function AddComments({ asin, loadComments }) {
             if (response.ok) {
                 loadComments()
                 setFormValue(initialFormSate)
-                alert('commento aggiunto')
-            } else { alert('inserisci un rate 1 a 5')}
+                setAlert({
+                    success: true,
+                    message: 'commento inserito'
+
+                })
+            } else { //alert('inserisci un rate 1 a 5')
+                setAlert({
+                    success: false,
+                    message: 'inserisci un rate 1 a 5'
+
+                })
+            }
 
         }
         catch (error) {
-            alert('errore generico')
+            //alert('errore generico')
+            setAlert({
+                success: false,
+                message: 'errore generico'
+            })
         }
+        setTimeout(() => {
+            setAlert(null)  //set per tempo x per far sparire alert
+        }, 2000)
     }
 
     return (
+        //{ alert modificato } onClose x chiudere alert
+
         <>
+
+
+            {alert && <Alert key={alert.success ? 'success' : 'danger'} variant={alert.success ? 'success' : 'danger'} onClose={() => setAlert(null)} dismissible>{alert.message}</Alert>}
             <Form>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Form.Label>Rate 1 of 5</Form.Label>
