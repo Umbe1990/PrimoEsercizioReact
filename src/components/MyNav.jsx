@@ -1,17 +1,21 @@
-import { Container, Nav, Navbar, NavDropdown,InputGroup,Form  } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown,InputGroup,Form,Button  } from 'react-bootstrap';
+import { ThemeContext } from '../context/ThemeContextProvider';
+import { useContext } from 'react';
 
 function MyNav({filter}) {
+    const{theme,toggleTheme}=useContext(ThemeContext) ////importato per cambiare sfondo delle navbar
     return (
         <>
 
 
-            <Navbar expand="lg" className="bg-primary">
-                <Container>
+            <Navbar expand="lg" >
+                <Container className={theme==='light'?'':'text-light bg-danger'}>
                     <Navbar.Brand href="#home">I-BOOK</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <InputGroup className="">
+                            <Button onClick={toggleTheme} variant="primary">{theme==='light'? 'cambia in dark':'rimetti light'}</Button>
 
                                 <Form.Control onChange={filter} aria-label="Text input with checkbox" placeholder="
         inserisci libro" />
