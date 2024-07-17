@@ -18,7 +18,7 @@ function CommentArea({asin}) {
     }
     useEffect(() => {
         loadComments()
-    }, [])
+    }, [asin])
 
 
     return (
